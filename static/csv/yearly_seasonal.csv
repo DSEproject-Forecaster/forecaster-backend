@@ -1,4 +1,4 @@
-temperature,dewpoint_temperature,wind_speed,mean_sea_level_pressure,relative_humidity,surface_solar_radiation,surface_thermal_radiation,total_cloud_cover,time_stamp
+Temperature,Dewpoint,Wind Speed,Pressure,Relative Humidity,Solar Radiation,Thermal Radiation,Cloud Cover,time_stamp
 5.1780987,2.899857,-0.08483773,-310.6982,-0.08003744,119.756195,20.393627,-0.06690013,2010-01-01
 5.8202395,3.8619397,-0.22660215,-304.9196,-0.058062103,100.03155,26.08467,-0.10128222,2010-02-01
 4.8967047,3.4217885,-0.19121112,-11.775767,-0.05684712,52.491264,22.844568,-0.0713273,2010-03-01
