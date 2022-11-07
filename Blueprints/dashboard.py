@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 import pandas as pd
 from random import randint
 
@@ -93,10 +93,11 @@ def getBoxPlots():
 
 @dashboard_bp.route('/getRadar/', methods=['GET'])
 def getRadar():
+    year = request.args.get('year')
     df = pd.read_csv('./static/csv/weather.csv')
     df['time_stamp'] = pd.to_datetime(df['time_stamp'])
 
-    df = df[df['time_stamp'].dt.year==2014]
+    df = df[df['time_stamp'].dt.year==int(year)]
     # df2 = df.iloc[-1]
     # df.append(df2)
     # print(df2.shape, df.shape)
@@ -104,7 +105,7 @@ def getRadar():
 
     colList = list(df.columns)
     colList.remove('time_stamp')
-
+    
     for col in colList:
         trace = {
             'type': 'scatterpolar',
