@@ -1,12 +1,14 @@
 from flask import Blueprint, jsonify, request
 import pandas as pd
 from random import randint
+from pymongo import MongoClient
+import db.dbHelper as db
 
 dashboard_bp = Blueprint('dashboard', __name__)
 
 @dashboard_bp.route('/getDailySeasonalData/', methods=['GET'])
 def getDailySeasonalData():
-    daily_df = pd.read_csv('./static/csv/daily_seasonal.csv')
+    daily_df = pd.DataFrame.from_dict(db.readDailySeasonality()).drop("_id", axis=1)
 
     out = []
 
@@ -22,7 +24,7 @@ def getDailySeasonalData():
 
 @dashboard_bp.route('/getYearlySeasonalData/', methods=['GET'])
 def getYearlySeasonalData():
-    yearly_df = pd.read_csv('./static/csv/yearly_seasonal.csv')
+    yearly_df = pd.DataFrame.from_dict(db.readYearlySeasonality()).drop("_id", axis=1)
 
     out = []
 
@@ -42,7 +44,7 @@ def getYearlySeasonalData():
 
 @dashboard_bp.route('/getTrends/', methods=['GET'])
 def getTrends():
-    trend_df = pd.read_csv('./static/csv/trends.csv')
+    trend_df = pd.DataFrame.from_dict(db.readTrends()).drop("_id", axis=1)
 
     out = []
 
@@ -62,7 +64,7 @@ def getTrends():
 
 @dashboard_bp.route('/getCorrelations/', methods=['GET'])
 def getCorrelations():
-    df = pd.read_csv('./static/csv/weather.csv').drop('time_stamp', axis=1)
+    df = pd.DataFrame.from_dict(db.readWeatherData()).drop("_id", axis=1)
 
     out = [
         {
@@ -77,7 +79,7 @@ def getCorrelations():
 
 @dashboard_bp.route('/getBoxPlots/', methods=['GET'])
 def getBoxPlots():
-    df = pd.read_csv('./static/csv/weather.csv').drop('time_stamp', axis=1)
+    df = pd.DataFrame.from_dict(db.readWeatherData()).drop("_id", axis=1)
 
     out = []
 
@@ -94,7 +96,7 @@ def getBoxPlots():
 @dashboard_bp.route('/getRadar/', methods=['GET'])
 def getRadar():
     year = request.args.get('year')
-    df = pd.read_csv('./static/csv/weather.csv')
+    df = pd.DataFrame.from_dict(db.readWeatherData()).drop("_id", axis=1)
     df['time_stamp'] = pd.to_datetime(df['time_stamp'])
 
     df = df[df['time_stamp'].dt.year==int(year)]
