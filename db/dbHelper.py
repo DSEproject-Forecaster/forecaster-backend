@@ -15,6 +15,10 @@ def readTrends():
 def readWeatherData():
     collection = db['weather']
     return collection.find_one({})
-    
+
+def getPrediction(timestamps):
+     collection = db['forecasts']
+     return list(collection.find({"time_stamp": {"$in": timestamps}}, {'_id': False}))
+
 client = MongoClient("mongodb+srv://dseproject:52WZZNOI1sqoiQ2u@cluster0.eeo6x3p.mongodb.net/?retryWrites=true&w=majority")
 db = client.test
