@@ -99,19 +99,17 @@ def getRadar():
     df = pd.DataFrame.from_dict(db.readWeatherData()).drop("_id", axis=1)
     df['time_stamp'] = pd.to_datetime(df['time_stamp'])
 
-    df = df[df['time_stamp'].dt.year==int(year)]
-    # df2 = df.iloc[-1]
-    # df.append(df2)
-    # print(df2.shape, df.shape)
+    df = df[(df['time_stamp'].dt.year==int(year)) & (df['time_stamp'].dt.day==1) & (df['time_stamp'].dt.hour==0)]
     out = []
 
     colList = list(df.columns)
     colList.remove('time_stamp')
     
     for col in colList:
+        vals = df[col].values.tolist()
         trace = {
             'type': 'scatterpolar',
-            'r': df[col].values.tolist(),
+            'r': vals + [vals[0]],
             'theta': ['Jan','Feb','Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'],
             'name': col
         }
