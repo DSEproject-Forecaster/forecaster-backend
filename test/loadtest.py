@@ -25,4 +25,4 @@ class WebsiteTestUser(HttpUser):
 
     @task(6)
     def radar(self):
-        self.client.get('http://localhost:5050/dashboard/getRadar/')
+        self.client.get('http://localhost:5050/dashboard/getRadar/?year=2020')
