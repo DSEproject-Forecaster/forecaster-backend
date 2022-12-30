@@ -64,7 +64,7 @@ def getTrends():
 
 @dashboard_bp.route('/getCorrelations/', methods=['GET'])
 def getCorrelations():
-    df = pd.DataFrame.from_dict(db.readWeatherData()).drop("_id", axis=1)
+    df = pd.DataFrame.from_dict(db.readWeatherData()).drop(["_id",'time_stamp'], axis=1)
 
     out = [
         {
